@@ -1,0 +1,5 @@
+import UXDesigner 1.0
+
+Project {
+    name: "Demo"
+}

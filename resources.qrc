@@ -1,0 +1,14 @@
+<RCC>
+    <qresource>
+        <file>images/logo.svg</file>
+        <file>images/new.svg</file>
+        <file>images/open.svg</file>
+        <file>images/arrow.png</file>
+        <file>images/ellipse.png</file>
+        <file>images/rectangle.png</file>
+        <file>images/svg.png</file>
+        <file>images/text.png</file>
+        <file>images/camera.png</file>
+        <file>images/rect_cursor.png</file>
+    </qresource>
+</RCC>
