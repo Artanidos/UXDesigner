@@ -125,3 +125,32 @@ class MoveItemCommand(QUndoCommand):
 
     def redo(self):
         self.item.setPos(self.x, self.y)
+
+
+class ScaleItemCommand(QUndoCommand):
+    def __init__(self, x, y, width, height, oldx, oldy, oldwidth, oldheight, scene, item, parent=None):
+        super(MoveItemCommand, self).__init__(parent)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.oldx = oldx
+        self.oldy = oldy
+        self.oldwidth = oldwidth
+        self.oldheight = oldheight
+        self.item = item
+        self.setText("Scale " + item.typeName())
+    
+    def undo(self):
+        self.item.setPos(self.oldx, self.oldy)
+        self.item.setWidth(self.oldwidth)
+        self.item.setHeight(self.oldheight)
+        self.item.scaleObjects()
+        self.item.posChanged(self.oldx, self.oldy)
+
+    def redo(self):
+        self.item.setPos(self.x, self.y)
+        self.item.setWidth(self.width)
+        self.item.setHeight(self.height)
+        self.item.scaleObjects()
+        self.item.posChanged(self.x, self.y)

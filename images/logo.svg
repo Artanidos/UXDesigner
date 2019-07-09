@@ -17,7 +17,40 @@
    inkscape:version="0.92.4 (unknown)"
    sodipodi:docname="logo.svg">
   <defs
-     id="defs2" />
+     id="defs2">
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter1275">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood1265" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite1267" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="1.1"
+         result="blur"
+         id="feGaussianBlur1269" />
+      <feOffset
+         dx="1"
+         dy="1"
+         result="offset"
+         id="feOffset1271" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite1273" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -26,7 +59,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.2992647"
-     inkscape:cx="68.571429"
+     inkscape:cx="74.34893"
      inkscape:cy="68.571429"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -45,7 +78,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -63,14 +96,26 @@
        y="259.0311" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:15.10528183px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.37763205;"
-       x="0.5187397"
-       y="283.34894"
-       id="text819"><tspan
+       style="font-style:normal;font-weight:normal;font-size:23.55152702px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:0.58878821;filter:url(#filter1275)"
+       x="-0.44210884"
+       y="281.13876"
+       id="text819"
+       transform="matrix(0.93593274,0,0,1.0086713,1.4209677,-2.3648442)"><tspan
          sodipodi:role="line"
          id="tspan817"
-         x="0.5187397"
-         y="283.34894"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.37763205;fill:#ffffff;">UXD</tspan></text>
+         x="-0.44210884"
+         y="281.13876"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#e6e6e6;stroke-width:0.58878821">UX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.58422613px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:0.16460566"
+       x="2.2195358"
+       y="290.29816"
+       id="text915"><tspan
+         sodipodi:role="line"
+         id="tspan913"
+         x="2.2195358"
+         y="290.29816"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#e6e6e6;stroke-width:0.16460566">Designer</tspan></text>
   </g>
 </svg>

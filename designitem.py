@@ -132,8 +132,8 @@ class DesignItem(QGraphicsItem, QObject):
         elif mevent.type() == QEvent.GraphicsSceneMouseRelease:
             if self.oldx  != self.pos().x() and self.oldy != self.pos().y() and self.oldwidth != self.rect.width() and self.oldheight != self.rect.height():
                 undostack = self.scene.undostack
-                #cmd = ScaleItemCommand(self.pos().x(), self.pos().y(), self.rect().width(), self.rect().height(), self.oldx, self.oldy, self.oldwidth, self.oldheight, self.scene, self)
-                #undoStack.push(cmd)
+                cmd = ScaleItemCommand(self.pos().x(), self.pos().y(), self.rect().width(), self.rect().height(), self.oldx, self.oldy, self.oldwidth, self.oldheight, self.scene, self)
+                undoStack.push(cmd)
             
             handle.setMouseState(ItemHandle.MOUSE_RELEASED)
         elif mevent.type() == QEvent.GraphicsSceneMouseMove:
