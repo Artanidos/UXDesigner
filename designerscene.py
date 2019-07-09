@@ -49,6 +49,9 @@ class DesignerScene(QGraphicsScene):
         self.addBackgroundRect()
         self.blackSelectionRect = None
 
+    def setScaling(self, scaling):
+        self.scaling = scaling
+
     def setUndostack(self, st):
         self.undostack = st
 

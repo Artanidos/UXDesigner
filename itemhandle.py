@@ -19,22 +19,26 @@
 #############################################################################
 
 from PyQt5.QtWidgets import QGraphicsItem
+from PyQt5.QtCore import QRectF, Qt, QPointF
+from PyQt5.QtGui import QPen, QBrush, QColor
 
-
-MOUSE_RELEASED = 0
-MOUSE_DOWN = 1
-MOUSE_MOVING = 2
 
 class ItemHandle(QGraphicsItem):
+    MOUSE_RELEASED = 0
+    MOUSE_DOWN = 1
+    MOUSE_MOVING = 2
+
     def __init__(self, parent, corner, scaling):
-        super(Rectangle, self).__init__(parent)
-        self.mouseDownX(0),
-        self.mouseDownY(0),
-        self.color(Qt.black),
-        self.pen(Qt.white),
-        self.corner(corner),
-        self.mouseButtonState(MOUSE_RELEASED)
+        super(ItemHandle, self).__init__(parent)
+        self.mouseDownX = 0
+        self.mouseDownY = 0
+        self.color = Qt.black
+        self.pen = QPen(Qt.white)
+        self.corner = corner
+        self.mouseButtonState = ItemHandle.MOUSE_RELEASED
         self.pen.setWidth(1)
+        self.width = 0
+        self.height = 0
         
         if scaling == 0:
             self.width = 18.0
