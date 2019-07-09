@@ -1,2 +1,3 @@
 # UXDesigner
-UXDesigner is a design and mockup tool for Linux desktop.
+UXDesigner is a tool to wireframe, design, prototype and present user experiences for mobile, web amd desktop.  
+  
