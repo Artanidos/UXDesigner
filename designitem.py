@@ -22,6 +22,7 @@ from PyQt5.QtCore import QObject, QRectF, Qt, pyqtSignal, QEvent
 from PyQt5.QtWidgets import QGraphicsItem, QGraphicsSceneMouseEvent
 from PyQt5.QtGui import QColor, QPen, QGuiApplication
 from itemhandle import ItemHandle
+from command import ScaleItemCommand
 
 
 class DesignItem(QGraphicsItem, QObject):
@@ -183,7 +184,17 @@ class DesignItem(QGraphicsItem, QObject):
             deltaWidth = newWidth - self.rect.width()
             deltaHeight = newHeight - self.rect.height()
 
-            controlPressed = False #QGuiApplication.queryKeyboardModifiers() | Qt.ControlModifier == Qt.ControlModifier
+            shiftPressed = False
+            controlPressed = False
+            modifiers = QGuiApplication.keyboardModifiers()
+            if modifiers == Qt.ShiftModifier:
+                shiftPressed = True
+            elif modifiers == Qt.ControlModifier:
+                controlPressed = True
+            elif modifiers == (Qt.ControlModifier | Qt.ShiftModifier):
+                shiftPressed = True
+                controlPressed = True
+            
             if controlPressed:
                 # keep ratio
                 ratio = self.rect.width() / self.rect.height()
@@ -203,8 +214,6 @@ class DesignItem(QGraphicsItem, QObject):
 
             deltaWidth *= (-1)
             deltaHeight *= (-1)
-
-            shiftPressed = False #QGuiApplication.queryKeyboardModifiers() | Qt.ShiftModifier == Qt.ShiftModifier
 
             newXpos = self.pos().x()
             newYpos = self.pos().y()
@@ -263,7 +272,7 @@ class DesignItem(QGraphicsItem, QObject):
                 else:
                     newXpos = self.pos().x() + deltaWidth
 
-            if newXpos != self.pos().x() and newYpos != self.pos().y():
+            if newXpos != self.pos().x() or newYpos != self.pos().y():
                 self.setPos(newXpos, newYpos)
                 self.posChanged(newXpos, newYpos)
             
