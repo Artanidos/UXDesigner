@@ -30,12 +30,6 @@ class Ellipse(DesignItem):
         self.pen = QPen()
         self.brush = QBrush()
 
-    def setBrush(self, brush):
-        self.brush = brush
-
-    def setPen(self, pen):
-        self.pen = pen
-
     def typeName(self):
         return "Ellipse"
 
