@@ -48,7 +48,7 @@ class AddItemCommand(QUndoCommand):
             self.item.setHeight(50)
             self.setText("Add Rectangle")
 
-        elif mode == DesignerScene.ModeEllipse:
+        elif mode == DesignerScene.ELLIPSE:
             self.item = Ellipse(self.scene)
             self.item.setId("Ellipse")
             self.item.setPen(QPen(Qt.black))
@@ -60,7 +60,7 @@ class AddItemCommand(QUndoCommand):
             self.item.setHeight(50)
             self.setText("Add Ellipse")
 
-        elif mode == DesignerScene.ModeText:
+        elif mode == DesignerScene.TEXT:
             self.item = Text("Lorem ipsum dolor", self.scene)
             self.item.setId("Text")
             self.item.setFlag(QGraphicsItem.ItemIsMovable, True)
@@ -68,45 +68,32 @@ class AddItemCommand(QUndoCommand):
             self.item.setPos(x, y)
             self.setText("Add Text")
 
-        elif mode == DesignerScene.ModeBitmap:
+        elif mode == DesignerScene.BITMAP:
             self.item = Bitmap(fileName, self.scene)
             self.item.setId("Bitmap")
             self.item.setFlag(QGraphicsItem.ItemIsMovable, True)
             self.item.setFlag(QGraphicsItem.ItemIsSelectable, True)
             self.item.setPos(x, y)
-            self.setText(QObject.tr("Add Bitmap"))
+            self.setText("Add Bitmap")
             
-        elif mode == DesignerScene.ModeSvg:
+        elif mode == DesignerScene.SVG:
             self.item = Vectorgraphic(fileName, self.scene)
             self.item.setId("Vectorgraphic")
             self.item.setFlag(QGraphicsItem.ItemIsMovable, True)
             self.item.setFlag(QGraphicsItem.ItemIsSelectable, True)
             self.item.setPos(x, y)
-            self.setText(QObject.tr("Add Vectorgraphic"))
-                    
-            # case AnimationScene.EditMode.ModePlugin:
-            
-            #     ItemInterface *item = Plugins.getItemPlugin(self.scene.actPluginName())
-            #     self.item = item.getInstance(self.scene)
-            #     self.item.setId(item.displayName())
-            #     self.item.setFlag(QGraphicsItem.ItemIsMovable, true)
-            #     self.item.setFlag(QGraphicsItem.ItemIsSelectable, true)
-            #     self.item.setPos(x, y)
-            #     self.item.setPlayheadPosition(self.scene.playheadPosition())
-            #     setText("Add " + item.displayName())
-            #     break
-    
+            self.setText("Add Vectorgraphic")
 
     def undo(self):
         self.scene.clearSelection()
         self.scene.removeItem(self.item)
         self.item.setDeleted(true)
-        #self.scene.itemRemoved.emit(self.item)
+        self.scene.itemRemoved.emit(self.item)
     
     def redo(self):
         self.scene.clearSelection()
         self.scene.addItem(self.item)
-        #self.scene.itemAdded.emit(self.item)
+        self.scene.itemAdded.emit(self.item)
     
 
 class MoveItemCommand(QUndoCommand):
