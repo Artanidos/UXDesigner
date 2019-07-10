@@ -153,6 +153,10 @@ class MainWindow(QMainWindow):
 
         self.selectAct.triggered.connect(self.setSelectMode)
         self.rectangleAct.triggered.connect(self.setRectangleMode)
+        self.ellipseAct.triggered.connect(self.setEllipseMode)
+        self.textAct.triggered.connect(self.setTextMode)
+        self.bitmapAct.triggered.connect(self.setBitmapMode)
+        self.svgAct.triggered.connect(self.setSvgMode)
 
     def openSettings(self):
         dlg = Settings(self.book)
@@ -289,6 +293,25 @@ class MainWindow(QMainWindow):
         self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/rect_cursor.png"))))
         self.scene.setEditMode(DesignerScene.RECTANGLE)
 
+    def setEllipseMode(self):
+        self.scene.clearSelection()
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/ellipse_cursor.png"))));
+        self.scene.setEditMode(DesignerScene.ELLIPSE)
+
+    def setTextMode(self):
+        self.scene.clearSelection()
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/text_cursor.png"))));
+        self.scene.setEditMode(DesignerScene.TEXT)
+
+    def setBitmapMode(self):
+        self.scene.clearSelection()
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/bitmap_cursor.png"))))
+        self.scene.setEditMode(DesignerScene.BITMAP)
+
+    def setSvgMode(self):
+        self.scene.clearSelection()
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/svg_cursor.png"))))
+        self.scene.setEditMode(DesignerScene.SVG)
 
 # void MainWindow::setEllipseMode()
 # {
