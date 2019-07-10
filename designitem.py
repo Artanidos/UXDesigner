@@ -20,7 +20,7 @@
 
 from PyQt5.QtCore import QObject, QRectF, Qt, pyqtSignal, QEvent
 from PyQt5.QtWidgets import QGraphicsItem, QGraphicsSceneMouseEvent
-from PyQt5.QtGui import QColor, QPen, QGuiApplication
+from PyQt5.QtGui import QColor, QPen, QGuiApplication, QBrush
 from itemhandle import ItemHandle
 from command import ScaleItemCommand
 
@@ -28,12 +28,14 @@ from command import ScaleItemCommand
 class DesignItem(QGraphicsItem, QObject):
     positionChanged = pyqtSignal(int, int)
 
-    def __init__(self, scene, is_scene_rect):
+    def __init__(self, scene, is_scene_rect=False):
         QGraphicsItem.__init__(self)
         QObject.__init__(self)
         self.scene = scene
         self.is_scene_rect = is_scene_rect
         self.id = ""
+        self.pen = QPen()
+        self.brush = QBrush()
         self.hasHandles = False
         self.handles = [None, None, None, None, None, None, None, None]
         self.setFlag(QGraphicsItem.ItemSendsGeometryChanges, True)
