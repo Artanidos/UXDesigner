@@ -32,7 +32,7 @@ class AddItemCommand(QUndoCommand):
         from ellipse import Ellipse
         from text import Text
         from bitmap import Bitmap
-        from vectorgraphic import Vectotgraphic 
+        from vectorgraphic import Vectorgraphic
         self.scene = scene
         self.item = None
 
