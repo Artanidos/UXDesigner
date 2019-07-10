@@ -28,12 +28,6 @@ class Rectangle(DesignItem):
         super(Rectangle, self).__init__(scene, is_scene_rect)
         self.setRect(0, 0, 0, 0)
 
-    def setBrush(self, brush):
-        self.brush = brush
-
-    def setPen(self, pen):
-        self.pen = pen
-
     def typeName(self):
         return "Rectangle"
 
