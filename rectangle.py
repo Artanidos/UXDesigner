@@ -27,8 +27,6 @@ class Rectangle(DesignItem):
     def __init__(self, scene, is_scene_rect=False):
         super(Rectangle, self).__init__(scene, is_scene_rect)
         self.setRect(0, 0, 0, 0)
-        self.pen = QPen()
-        self.brush = QBrush()
 
     def setBrush(self, brush):
         self.brush = brush
