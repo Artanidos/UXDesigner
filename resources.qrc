@@ -10,5 +10,9 @@
         <file>images/text.png</file>
         <file>images/camera.png</file>
         <file>images/rect_cursor.png</file>
+        <file>images/ellipse_cursor.png</file>
+        <file>images/text_cursor.png</file>
+        <file>images/bitmap_cursor.png</file>
+        <file>images/svg_cursor.png</file>
     </qresource>
 </RCC>
