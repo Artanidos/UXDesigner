@@ -43,6 +43,12 @@ class DesignItem(QGraphicsItem, QObject):
     def setId(self ,id):
         self.id = id
 
+    def setBrush(self, brush):
+        self.brush = brush
+
+    def setPen(self, pen):
+        self.pen = pen
+
     def setRect(self, x, y, w, h):
         self.rect = QRectF(x, y, w, h)
 
