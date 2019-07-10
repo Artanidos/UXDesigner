@@ -18,9 +18,9 @@
 #
 #############################################################################
 
-from PyQt5.QtWidgets import QGraphicsScene, QGraphicsItem
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsItem, QFileDialog
 from PyQt5.QtGui import QColor, QBrush, QPen
-from PyQt5.QtCore import QRectF, Qt, QPointF
+from PyQt5.QtCore import QRectF, Qt, QPointF, pyqtSignal
 from rectangle import Rectangle
 from itemhandle import ItemHandle
 from designitem import DesignItem
@@ -28,6 +28,9 @@ from command import AddItemCommand, MoveItemCommand
 
 
 class DesignerScene(QGraphicsScene):
+    itemRemoved = pyqtSignal(object)
+    itemAdded = pyqtSignal(object)
+
     SELECT = 0 
     RECTANGLE = 1 
     ELLIPSE = 2
@@ -118,10 +121,10 @@ class DesignerScene(QGraphicsScene):
                 dialog.setFileMode(QFileDialog.AnyFile)
                 dialog.setNameFilter(filter)
                 dialog.setWindowTitle(title)
-                dialog.setOption(QFileDialog.DontUseNativeDialog, true)
+                dialog.setOption(QFileDialog.DontUseNativeDialog, True)
                 dialog.setAcceptMode(QFileDialog.AcceptOpen)
                 if dialog.exec():
-                    fileName = dialog.selectedFiles().first()
+                    fileName = dialog.selectedFiles()[0]
                 del dialog
                 if not fileName:
                     return
