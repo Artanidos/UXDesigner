@@ -1,7 +1,7 @@
 #############################################################################
 # Copyright (C) 2019 Olaf Japp
 #
-# This file is part of UXDesigner.
+#  This file is part of UXDesigner.
 #
 #  UXDesigner is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -10,14 +10,13 @@
 #
 #  UXDesigner is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
 #  along with UXDesigner.  If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-
 import sys
 import os
 from PyQt5.QtWidgets import QApplication, QStyleFactory

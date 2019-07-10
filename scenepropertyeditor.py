@@ -1,7 +1,7 @@
 #############################################################################
 # Copyright (C) 2019 Olaf Japp
 #
-# self. file is part of UXDesigner.
+#  This file is part of UXDesigner.
 #
 #  UXDesigner is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -9,8 +9,8 @@
 #  (at your option) any later version.
 #
 #  UXDesigner is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
