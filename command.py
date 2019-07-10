@@ -115,7 +115,7 @@ class MoveItemCommand(QUndoCommand):
 
 class ScaleItemCommand(QUndoCommand):
     def __init__(self, x, y, width, height, oldx, oldy, oldwidth, oldheight, scene, item, parent=None):
-        super(MoveItemCommand, self).__init__(parent)
+        super(ScaleItemCommand, self).__init__(parent)
         self.x = x
         self.y = y
         self.width = width
@@ -140,3 +140,72 @@ class ScaleItemCommand(QUndoCommand):
         self.item.setHeight(self.height)
         self.item.scaleObjects()
         self.item.posChanged(self.x, self.y)
+
+
+class RaiseItemCommand(QUndoCommand):
+    def __init__(self, item, parent=None):
+        super(RaiseItemCommand, self).__init__(parent)
+        self.item = item
+        self.setText("Raise " + item.typeName())
+
+    def undo(self):
+        self.item.lowerItem()
+
+    def redo(self):
+        self.item.raiseItem()
+
+
+class LowerItemCommand(QUndoCommand):
+    def __init__(self, item, parent=None):
+        super(LowerItemCommand, self).__init__(parent)
+        self.item = item
+        self.setText("Lower " + item.typeName())
+
+    def undo(self):
+        self.item.raiseItem()
+
+    def redo(self):
+        self.item.lowerItem()
+
+
+class BringItemToFrontCommand(QUndoCommand):
+    def __init__(self, item, parent=None):
+        super(BringItemToFrontCommand, self).__init__(parent)
+        self.item = item
+        self.setText("Bring " + item.typeName() + " to front")
+
+    def undo(self):
+        self.item.sendToBack()
+
+    def redo(self):
+        self.item.bringToFront()
+
+
+class SendItemToBackCommand(QUndoCommand):
+    def __init__(self, item, parent=None):
+        super(SendItemToBackCommand, self).__init__(parent)
+        self.item = item
+        self.setText("Send " + item.typeName() + " to back")
+
+    def undo(self):
+        self.item.bringToFront()
+
+    def redo(self):
+        self.item.sendToBack()
+
+
+class DeleteItemCommand(QUndoCommand):
+    def __init__(self, item, scene, parent=None):
+        super(DeleteItemCommand, self).__init__(parent)
+        self.item = item
+        self.scene = scene
+        self.setText("Delete " + item.typeName())
+
+    def undo(self):
+        self.scene.addItem(self.item)
+        self.scene.itemAdded.emit(self.item)
+
+    def redo(self):
+        self.item.setSelected(False)
+        self.scene.removeItem(self.item)
+        self.scene.itemRemoved.emit(self.item)

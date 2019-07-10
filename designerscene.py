@@ -24,7 +24,7 @@ from PyQt5.QtCore import QRectF, Qt, QPointF, pyqtSignal
 from rectangle import Rectangle
 from itemhandle import ItemHandle
 from designitem import DesignItem
-from command import AddItemCommand, MoveItemCommand
+from command import AddItemCommand, MoveItemCommand, DeleteItemCommand
 
 
 class DesignerScene(QGraphicsScene):
@@ -51,6 +51,10 @@ class DesignerScene(QGraphicsScene):
         self.scaling = 1
         self.addBackgroundRect()
         self.blackSelectionRect = None
+
+    def deleteItem(self, item):
+        deleteCommand = DeleteItemCommand(item, self)
+        self.undostack.push(deleteCommand)
 
     def setScaling(self, scaling):
         self.scaling = scaling

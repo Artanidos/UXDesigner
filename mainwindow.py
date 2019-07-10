@@ -9,7 +9,7 @@
 #  (at your option) any later version.
 #
 #  UXDesigner is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  but WITHOUT ANY WARRANTY without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU General Public License for more details.
 #
@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
         zoom.addItem("4:1")
         zoom.addItem("8:1")
         zoom.setCurrentIndex(1)
-        #connect(zoom, SIGNAL(currentIndexChanged(int)), this, SLOT(changeZoom(int)))
+        zoom.currentIndexChanged.connect(self.changeZoom)
         vbox.addWidget(self.view)
         vbox.addLayout(hbox)
         hbox.addWidget(zoom)
@@ -284,6 +284,27 @@ class MainWindow(QMainWindow):
     def newFile(self):
         pass
 
+    def changeZoom(self, zoom):
+        self.view.resetTransform()
+        self.scene.setScaling(zoom)
+        list = self.scene.selectedItems()
+        for item in list:
+            item.setSelected(False)
+        
+        if zoom == 0:
+            self.view.scale(0.5, 0.5)
+        elif zoom == 1:
+            self.view.scale(1.,1.)
+        elif zoom == 2:
+            self.view.scale(2.,2.)
+        elif zoom == 3:
+            self.view.scale(4.,4.)
+        elif zoom == 4:
+            self.view.scale(8.,8.)
+        
+        for item in list:
+            item.setSelected(True)
+
     def setSelectMode(self):
         self.scene.setEditMode(DesignerScene.SELECT)
         self.scene.setCursor(Qt.ArrowCursor)
@@ -295,12 +316,12 @@ class MainWindow(QMainWindow):
 
     def setEllipseMode(self):
         self.scene.clearSelection()
-        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/ellipse_cursor.png"))));
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/ellipse_cursor.png"))))
         self.scene.setEditMode(DesignerScene.ELLIPSE)
 
     def setTextMode(self):
         self.scene.clearSelection()
-        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/text_cursor.png"))));
+        self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/text_cursor.png"))))
         self.scene.setEditMode(DesignerScene.TEXT)
 
     def setBitmapMode(self):
@@ -312,31 +333,3 @@ class MainWindow(QMainWindow):
         self.scene.clearSelection()
         self.scene.setCursor(QCursor(QPixmap.fromImage(QImage(":/images/svg_cursor.png"))))
         self.scene.setEditMode(DesignerScene.SVG)
-
-# void MainWindow::setEllipseMode()
-# {
-#     m_scene->clearSelection();
-#     m_scene->setCursor(QCursor(QPixmap::fromImage(QImage(":/images/ellipse_cursor.png"))));
-#     m_scene->setEditMode(AnimationScene::EditMode::ModeEllipse);
-# }
-
-# void MainWindow::setTextMode()
-# {
-#     m_scene->clearSelection();
-#     m_scene->setCursor(QCursor(QPixmap::fromImage(QImage(":/images/text_cursor.png"))));
-#     m_scene->setEditMode(AnimationScene::EditMode::ModeText);
-# }
-
-# void MainWindow::setBitmapMode()
-# {
-#     m_scene->clearSelection();
-#     m_scene->setCursor(QCursor(QPixmap::fromImage(QImage(":/images/bitmap_cursor.png"))));
-#     m_scene->setEditMode(AnimationScene::EditMode::ModeBitmap);
-# }
-
-# void MainWindow::setSvgMode()
-# {
-#     m_scene->clearSelection();
-#     m_scene->setCursor(QCursor(QPixmap::fromImage(QImage(":/images/svg_cursor.png"))));
-#     m_scene->setEditMode(AnimationScene::EditMode::ModeSvg);
-# }

@@ -18,28 +18,31 @@
 #
 #############################################################################
 
-from PyQt5.QtCore import QObject, QRectF, Qt, pyqtSignal, QEvent
-from PyQt5.QtWidgets import QGraphicsItem, QGraphicsSceneMouseEvent
+from PyQt5.QtCore import QRectF, Qt, pyqtSignal, QEvent
+from PyQt5.QtWidgets import QGraphicsItem, QGraphicsSceneMouseEvent, QAction, QMenu
 from PyQt5.QtGui import QColor, QPen, QGuiApplication, QBrush
 from itemhandle import ItemHandle
-from command import ScaleItemCommand
+from command import ScaleItemCommand, BringItemToFrontCommand, SendItemToBackCommand, RaiseItemCommand, LowerItemCommand
 
 
-class DesignItem(QGraphicsItem, QObject):
+class DesignItem(QGraphicsItem):
     positionChanged = pyqtSignal(int, int)
 
     def __init__(self, scene, is_scene_rect=False):
         QGraphicsItem.__init__(self)
-        QObject.__init__(self)
         self.scene = scene
         self.is_scene_rect = is_scene_rect
         self.id = ""
+        self.xscale = 1
+        self.yscale = 1
+        self.scaleX = 1.0
+        self.scaleY = 1.0
         self.pen = QPen()
         self.brush = QBrush()
         self.hasHandles = False
         self.handles = [None, None, None, None, None, None, None, None]
         self.setFlag(QGraphicsItem.ItemSendsGeometryChanges, True)
-    
+       
     def setId(self ,id):
         self.id = id
 
@@ -141,7 +144,7 @@ class DesignItem(QGraphicsItem, QObject):
         elif mevent.type() == QEvent.GraphicsSceneMouseRelease:
             if self.oldx  != self.pos().x() and self.oldy != self.pos().y() and self.oldwidth != self.rect.width() and self.oldheight != self.rect.height():
                 undostack = self.scene.undostack
-                cmd = ScaleItemCommand(self.pos().x(), self.pos().y(), self.rect().width(), self.rect().height(), self.oldx, self.oldy, self.oldwidth, self.oldheight, self.scene, self)
+                cmd = ScaleItemCommand(self.pos().x(), self.pos().y(), self.rect.width(), self.rect.height(), self.oldx, self.oldy, self.oldwidth, self.oldheight, self.scene, self)
                 undoStack.push(cmd)
             
             handle.setMouseState(ItemHandle.MOUSE_RELEASED)
@@ -313,3 +316,100 @@ class DesignItem(QGraphicsItem, QObject):
     def posChanged(self, x, y):
         pass
         #self.positionChanged.emit(x, y)
+
+    def contextMenuEvent(self, event):
+        if not self.is_scene_rect:
+            self.scene.clearSelection()
+            self.setSelected(True)
+            #self.contextMenu.exec(event.screenPos())
+
+            delAct = QAction("Delete")
+            delAct.setShortcut("Delete")
+            delAct.triggered.connect(self.deleteItemAction)
+
+            bringToFrontAct = QAction("Bring to front")
+            bringToFrontAct.triggered.connect(self.bringToFrontAction)
+
+            sendToBackAct = QAction("Send to back")
+            sendToBackAct.triggered.connect(self.sendToBackAction)
+
+            raiseAct = QAction("Raise")
+            raiseAct.triggered.connect(self.raiseAction)
+
+            lowerAct = QAction("Lower")
+            lowerAct.triggered.connect(self.lowerAction)
+
+            contextMenu = QMenu()
+            contextMenu.addAction(delAct)
+            contextMenu.addSeparator()
+            contextMenu.addAction(bringToFrontAct)
+            contextMenu.addAction(raiseAct)
+            contextMenu.addAction(lowerAct)
+            contextMenu.addAction(sendToBackAct)
+            contextMenu.exec(event.screenPos())
+            
+    def deleteItemAction(self):
+        self.scene.deleteItem(self)
+
+    def lowerAction(self):
+        cmd = LowerItemCommand(self)
+        self.scene.undostack.push(cmd)
+
+    def raiseAction(self):
+        cmd = RaiseItemCommand(self)
+        self.scene.undostack.push(cmd)
+
+    def sendToBackAction(self):
+        cmd = SendItemToBackCommand(self)
+        self.scene.undostack.push(cmd)
+
+    def bringToFrontAction(self):
+        cmd = BringItemToFrontCommand(self)
+        self.scene.undostack.push(cmd)
+
+    def lowerItem(self):
+        pos = self.scene.items().index(self)
+        for i in range(pos + 1, len(self.scene.items())):
+            item = self.scene.items()[i]
+            if isinstance(item, DesignItem) and not item.is_scene_rect:
+                self.stackBefore(item)
+                break
+
+        # trick to repaint item
+        self.setSelected(False)
+        self.setSelected(True)
+
+
+    def raiseItem(self):
+        pos = self.scene.items().index(self)
+        for i in range(pos - 1, -1, -1):
+            item = self.scene.items()[i]
+            if isinstance(item, DesignItem):
+                item.stackBefore(self)
+                break
+
+        # trick to repaint item
+        self.setSelected(False)
+        self.setSelected(True)
+
+    def bringToFront(self):
+        pos = self.scene.items().index(self)
+        for i in range(pos - 1, -1, -1):
+            item = self.scene.items()[i]
+            if isinstance(item, DesignItem):
+                item.stackBefore(self)
+
+        # trick to repaint item
+        self.setSelected(False)
+        self.setSelected(True)
+
+    def sendToBack(self):
+        pos = self.scene.items().index(self)
+        for i in range(pos + 1, len(self.scene.items())):
+            item = self.scene.items()[i]
+            if isinstance(item, DesignItem) and not item.is_scene_rect:
+                self.stackBefore(item)
+
+        # trick to repaint item
+        self.setSelected(False)
+        self.setSelected(True)
